@@ -1,4 +1,4 @@
-# TRAVEL PLANNER API (NESTJS)
+# Parcial 2
 
 API REST construida en NestJS para gestionar países (con caché) y planes de viaje.
 
