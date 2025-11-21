@@ -23,26 +23,7 @@ MONGODB_URI=mongodb://root:secret@localhost:27017/
 
 ### 1.3. Asegurar que MongoDB esté corriendo
 
-**Opción A:** Servicio local (instalado mediante el MSI oficial de MongoDB Community Server)
-
-1. Instala MongoDB Community Server desde la página oficial: https://www.mongodb.com/try/download/community
-2. Durante la instalación, deja seleccionada la opción "Install MongoDB as a Service".
-3. Una vez instalado, el servicio se inicia automáticamente.
-4. Si deseas iniciarlo manualmente, abre PowerShell como Administrador y ejecuta:
-```cmd
-   net start MongoDB
-```
-5. Para detenerlo:
-```cmd
-   net stop MongoDB
-```
-
-El servicio queda escuchando en:
-```
-MONGODB_URI=mongodb://root:secret@localhost:27017/
-```
-
-**Opción B:** Usando Docker Desktop (recomendado):
+Usando Docker Desktop (recomendado):
 
 Si tienes Docker Desktop instalado en Windows, ejecuta con docker abierto:
 ```cmd
