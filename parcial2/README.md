@@ -48,7 +48,7 @@ La API quedará disponible en:
 
 - http://localhost:3000/ (página estática servida desde la carpeta "public")
 - http://localhost:3000/countries
-- http://localhost:3000/travel-plans
+- http://localhost:3000/plans
 
 ## DESCRIPCIÓN MÍNIMA DE LA API
 
@@ -96,7 +96,7 @@ curl http://localhost:3000/countries/COL
 
 ### MÓDULO TRAVEL PLANS
 
-#### POST /travel-plans
+#### POST /plans
 
 **Descripción:** Crea un nuevo plan de viaje.
 
@@ -118,7 +118,7 @@ curl -X POST http://localhost:3000/travel-plans \
   -d '{ "countryCode": "COL", "title": "Vacaciones en Colombia", "startDate": "2025-12-01", "endDate": "2025-12-15", "notes": "Visitar Bogotá y Medellín" }'
 ```
 
-#### GET /travel-plans
+#### GET /plans
 
 **Descripción:** Lista todos los planes de viaje almacenados.
 
@@ -127,7 +127,7 @@ curl -X POST http://localhost:3000/travel-plans \
 curl http://localhost:3000/travel-plans
 ```
 
-#### GET /travel-plans/:id
+#### GET /plans/:id
 
 **Descripción:** Obtiene el detalle de un plan de viaje por su id.
 
@@ -177,7 +177,7 @@ Entidad que representa un país almacenado en la caché local (MongoDB).
 | **flagUrl** | `string` | URL de la bandera nacional. |
 | **createdAt** | `Date` | Fecha en que el país fue almacenado en la base de datos (generada por Mongoose con timestamps). |
 
-### MODELO TRAVELPLAN
+### MODELO PLAN
 
 Entidad que representa un plan de viaje para un país.
 
