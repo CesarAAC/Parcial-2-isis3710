@@ -14,7 +14,7 @@ import { PlansModule } from './plans/plans.module';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: "mongodb://root:secret@localhost:27017/",
+        uri: configService.get<string>('MONGODB_URI'),
       }),
       inject: [ConfigService],
     }),
