@@ -39,14 +39,21 @@ MONGODB_URI=mongodb://root:secret@localhost:27017/
 
 El servicio queda escuchando en:
 ```
-mongodb://localhost:27017
+MONGODB_URI=mongodb://root:secret@localhost:27017/
 ```
 
 **Opción B:** Usando Docker Desktop (recomendado):
 
-Si tienes Docker Desktop instalado en Windows, ejecuta:
+Si tienes Docker Desktop instalado en Windows, ejecuta con docker abierto:
 ```cmd
-docker run -d --name mongo-travel -p 27017:27017 mongo:7
+docker run -d \
+  -p 27017:27017 \
+  --name mongo \
+  -v /my/local/folder:/data/db \
+  -e MONGO_INITDB_ROOT_USERNAME=root \
+  -e MONGO_INITDB_ROOT_PASSWORD=secret \
+  mongo:6.0
+
 ```
 
 ### 1.4. Ejecutar la API
@@ -180,7 +187,7 @@ Entidad que representa un país almacenado en la caché local (MongoDB).
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
-| **alpha3Code** | `string` | Código alpha-3 del país, por ejemplo "COL", "ARG". |
+| **code** | `string` | Código alpha-3 del país, por ejemplo "COL", "ARG". |
 | **name** | `string` | Nombre del país, por ejemplo "Colombia". |
 | **region** | `string` | Región a la que pertenece, por ejemplo "Americas". |
 | **subregion** | `string` | Subregión, por ejemplo "South America". |
