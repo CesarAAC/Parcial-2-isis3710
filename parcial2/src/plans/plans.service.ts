@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException, } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException,forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Plan } from './plan.schema';
@@ -9,7 +9,9 @@ import { CountriesService } from '../countries/countries.service';
 @Injectable()
 export class PlansService {
   constructor(
-    @InjectModel(Plan.name) private PlanModel: Model<Plan>,
+    @InjectModel(Plan.name) 
+    private PlanModel: Model<Plan>,
+    @Inject(forwardRef(() => CountriesService))
     private readonly countriesService: CountriesService,
   ) {}
 
@@ -66,4 +68,7 @@ export class PlansService {
         }
         return this.toDto(plan);
     }
+    async findPlansByCountryCode(countryCode: string): Promise<Plan[]> {
+    return this.PlanModel.find({ countryCode }).exec();
+  }
 }

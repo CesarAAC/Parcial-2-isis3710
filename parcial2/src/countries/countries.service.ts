@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Inject,Injectable, NotFoundException, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Country } from './country.schema';
 import { CountriesProvider } from './countries.provider';
 import { CountryDto } from './country.dto';
+import { PlansService } from 'src/plans/plans.service';
 
 @Injectable()
 export class CountriesService {
@@ -11,6 +12,8 @@ export class CountriesService {
     @InjectModel(Country.name) 
     private countryModel: Model<Country>,
     private countryProvider: CountriesProvider,
+    @Inject(forwardRef(() => PlansService))
+    private readonly plansService: PlansService
   ) {}
 
   private toDto(
@@ -58,5 +61,21 @@ export class CountriesService {
     res=countryCache
     }
     return this.toDto(res, "cache")
+  }
+
+  async deleteFromCache(code: string): Promise<CountryDto> {
+    const country = await this.countryModel.findOne({ code }).exec();
+    if (!country) {
+      throw new NotFoundException(`Country with code ${code} not found in Cache`);
+    }
+
+    // Verificamos si existen planes de viaje asociados a este país
+    const plansExist = await this.plansService.findPlansByCountryCode(code);
+    if (plansExist.length > 0) {
+      throw new NotFoundException(`Cannot delete country ${code} because there are travel plans associated`);
+    }
+
+    await country.deleteOne();  // Elimina el país de la base de datos
+    return this.toDto(country, 'cache');
   }
 }
